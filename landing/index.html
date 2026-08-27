@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Doomscroll Journal | Stop doomscrolling. Start reflecting.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF8;
+            --surface: #FFFFFF;
+            --surface-elevated: #F4F4F2;
+            --text-main: #1A1A1A;
+            --text-muted: #666666;
+            --accent: #2D6A4F;
+            --accent-hover: #1B4332;
+            --border: #EAEAEA;
+            --phone-bg: #1A1A1A;
+            --phone-border: #333333;
+            --phone-text: #FFFFFF;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0F0F0F;
+                --surface: #1A1A1A;
+                --surface-elevated: #242424;
+                --text-main: #FFFFFF;
+                --text-muted: #A0A0A0;
+                --accent: #52B788;
+                --accent-hover: #74C69D;
+                --border: #333333;
+                --phone-bg: #0F0F0F;
+                --phone-border: #1A1A1A;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 99px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--surface-elevated);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 5rem 0 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 480px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Phone Mockup */
+        .phone {
+            width: 320px;
+            height: 650px;
+            background-color: var(--phone-bg);
+            border-radius: 40px;
+            border: 12px solid var(--phone-border);
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: var(--phone-text);
+        }
+
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background-color: var(--phone-border);
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .blocker-ui {
+            padding: 3rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .app-trigger-indicator {
+            font-size: 0.8rem;
+            color: #A0A0A0;
+            margin-top: 1rem;
+            text-align: center;
+            background: #2A2A2A;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .breathing-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            margin: 3rem 0;
+            animation: breathe 8s infinite ease-in-out;
+            opacity: 0.3;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(0.8); opacity: 0.2; }
+            50% { transform: scale(1.5); opacity: 0.6; }
+            100% { transform: scale(0.8); opacity: 0.2; }
+        }
+
+        .prompt-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .mock-textarea {
+            width: 100%;
+            background: #2A2A2A;
+            border-radius: 12px;
+            height: 100px;
+            padding: 1rem;
+            border: 1px solid #444;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .mock-btn {
+            width: 100%;
+            background: #444; /* Disabled state */
+            color: #A0A0A0;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* How it works */
+        .how-it-works {
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .how-it-works h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--border);
+            z-index: 0;
+        }
+
+        .step {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            padding: 0 1rem;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--surface);
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .step h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Features */
+        .features {
+            padding: 5rem 0;
+            background-color: var(--surface);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background-color: var(--bg);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #FFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        /* Stats */
+        .stats {
+            background: var(--text-main);
+            color: var(--bg);
+            padding: 3rem 0;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Download */
+        .download {
+            padding: 8rem 0;
+            text-align: center;
+        }
+
+        .download h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .download p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+        }
+
+        .qr-placeholder {
+            width: 180px;
+            height: 180px;
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-weight: 500;
+            background: var(--surface);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            color: var(--text-muted);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        details {
+            margin-top: 2rem;
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        details p {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 3rem 0;
+            }
+            .hero-cta {
+                justify-content: center;
+            }
+            .steps {
+                flex-direction: column;
+                gap: 3rem;
+            }
+            .steps::before {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">Anti-Doomscroll</div>
+            <div class="nav-links">
+                <a href="#download" class="btn btn-secondary">App Store</a>
+                <a href="#download" class="btn btn-primary">Google Play</a>
+            </div>
+        </nav>
+    </div>
+
+    <section class="hero container">
+        <div class="hero-content">
+            <h1>Stop doomscrolling.<br>Start reflecting.</h1>
+            <p>Reclaim your time. Whenever you open a distracting app, we interrupt the scroll and ask you to write one mindful sentence instead.</p>
+            <div class="hero-cta">
+                <a href="#download" class="btn btn-primary">Download for iOS</a>
+                <a href="#download" class="btn btn-secondary">Download for Android</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="phone">
+                <div class="notch"></div>
+                <div class="blocker-ui">
+                    <div class="app-trigger-indicator">You've spent 18 min on Instagram</div>
+                    <div class="breathing-circle"></div>
+                    <h3 class="prompt-text">Name one thing that made you smile today.</h3>
+                    <div class="mock-textarea">I'm grateful for...</div>
+                    <div class="mock-btn">Submit (0/5 words)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works container">
+        <h2>How it works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>We watch your screen time</h3>
+                <p>Set daily limits for your most distracting social media apps. Everything happens privately on your device.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>We interrupt the scroll</h3>
+                <p>When you exceed your limit and open the app, we block it with a gentle, calming breathing screen.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>You write one sentence</h3>
+                <p>Complete a quick gratitude prompt. After you write, you can go back to scrolling—but you probably won't want to.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>Features designed for mindfulness</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Screen Time Monitor</h3>
+                    <p>Accurate, on-device detection of whenever you open addictive apps, using native iOS and Android APIs.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Gratitude Blocker</h3>
+                    <p>A full-screen intervention that turns mind-numbing scroll sessions into moments of deep reflection and calm.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Streak System</h3>
+                    <p>Build a habit of gratitude. Track your consecutive days of mindfulness and keep the flame alive.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Mood Tracking</h3>
+                    <p>Categorize your entries by how you felt when you wrote them. Understand the emotions behind your scrolling.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Weekly Insights</h3>
+                    <p>Beautiful charts show you which apps trigger you the most and when you're most likely to doomscroll.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Privacy First</h3>
+                    <p>No user accounts. No cloud syncing unless you export it yourself. Your journal lives strictly on your device.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials container">
+        <h2 style="text-align: center;">What users are saying</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial">
+                <div class="avatar">SJ</div>
+                <p>"I used to spend 2 hours on TikTok before sleeping. Now, the blocker kicks in, I write one sentence about my day, and I put the phone down. Life-changing."</p>
+            </div>
+            <div class="testimonial">
+                <div class="avatar">MK</div>
+                <p>"Brilliant bypass of standard app limiters. You can't just hit 'Ignore'—you have to actually pause and reflect. The breathing circle totally de-escalates my anxiety."</p>
+            </div>
+            <div class="testimonial">
+                <div class="avatar">AL</div>
+                <p>"A beautifully designed anti-distraction tool that doesn't just block me, it actually gives me something positive to do instead. My streaks are at 45 days!"</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container stats-row">
+            <div class="stat">
+                <div class="stat-value">30+</div>
+                <div class="stat-label">Prompts</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">9</div>
+                <div class="stat-label">Apps Monitored</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">On-Device</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">0</div>
+                <div class="stat-label">Ads Ever</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="download container">
+        <h2>Ready to break the habit?</h2>
+        <p>Available completely free for iOS and Android.</p>
+        <div class="qr-placeholder" style="border: 1px solid var(--accent); color: var(--accent); background: var(--accent-muted);">v1.0.0 Stable Release</div>
+        <div class="hero-cta" style="justify-content: center;">
+            <a href="https://github.com/AaqibhafeezKhan/Anti-Doomscroll-SDK/releases" class="btn btn-primary" style="padding: 1rem 3rem;">View Releases</a>
+            <a href="#how-it-works" class="btn btn-secondary" style="padding: 1rem 3rem;">Learn More</a>
+        </div>
+    </section>
+
+    <footer class="container">
+        <div class="footer-content">
+            <div>&copy; 2026 Anti-Doomscroll Journal. All rights reserved.</div>
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+            </div>
+        </div>
+
+        <details id="privacy">
+            <summary>Privacy Policy</summary>
+            <p>We believe your data is yours. Anti-Doomscroll Journal stores all screen time metrics, journal entries, and preferences completely on your device using encrypted local storage. We do not transmit, sell, or analyze your data on external servers. The "Screen Time" and "Usage Stats" permissions are utilized exclusively to trigger the core functionality of the application locally.</p>
+        </details>
+        
+        <details id="terms">
+            <summary>Terms of Service</summary>
+            <p>Anti-Doomscroll Journal is provided "as is" without warranty of any kind. You are responsible for ensuring backups of your exported data. We are not responsible for any bugs in data retention. By using the app, you agree to grant local device tracking permissions solely for the functionality of the blocker. We reserve the right to modify the app features over time.</p>
+        </details>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

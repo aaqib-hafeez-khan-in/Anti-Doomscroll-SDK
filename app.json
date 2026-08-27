@@ -1,0 +1,8 @@
+{
+  "name": "AntiDoomscrollJournal",
+  "displayName": "Anti-Doomscroll Journal",
+  "version": "1.0.0",
+  "buildNumber": 1,
+  "bundleIdentifier": "com.antidoomscroll.journal",
+  "packageName": "com.antidoomscroll.journal"
+}
